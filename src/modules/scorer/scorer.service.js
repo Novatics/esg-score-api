@@ -1,10 +1,10 @@
 import transportScorer from "./transport.scorer";
 import energyScorer from "./energy.scorer";
 
-function scoreClassifiedTransactions(customer, classifiedTransactions) {
+function scoreClassifiedTransactions(customerIdentification, classifiedTransactions) {
   return {
     transport: transportScorer.score(classifiedTransactions),
-    energy: energyScorer.score(customer, classifiedTransactions),
+    energy: energyScorer.score(customerIdentification, classifiedTransactions),
   };
 }
 

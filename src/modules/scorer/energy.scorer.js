@@ -2,10 +2,10 @@ import avgConsumptionPerState from '../../mock-data/average-consumption-per-stat
 
 const ENERGY_TRANSACTIONS = ['luz', 'agua', 'gás'];
 
-function score(customer, classifiedTransactions) {
+function score(customerIdentification, classifiedTransactions) {
   const energyTransactions = classifiedTransactions
     .filter(transaction => transaction.tags && transaction.tags.includes('energy'));
-  const customerState = getCustomerState(customer);
+  const customerState = getCustomerState(customerIdentification);
   const custEnergyAvgConsumption = [];
   for (const classifiedTransaction of energyTransactions) {
     const { transaction } = classifiedTransaction;
@@ -20,8 +20,8 @@ function score(customer, classifiedTransactions) {
   return ((avgScorePct + 1) / 2) * 10;
 }
 
-function getCustomerState(customer) {
-  const { contacts: { postalAddresses } } = customer;
+function getCustomerState(customerIdentification) {
+  const { contacts: { postalAddresses } } = customerIdentification;
   const mainAddress = postalAddresses.find(addr => addr.isMain);
   return mainAddress ? mainAddress.countrySubDivision : null;
 }

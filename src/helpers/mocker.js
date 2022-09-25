@@ -1,4 +1,5 @@
 import transactionsMock from '../mock-data/transactions.json';
+import customersMock from '../mock-data/mock-customers.json';
 
 function getAccountTransactions(customerId, organizationId, accountId) {
   const filteredTransactions = transactionsMock.filter(t =>
@@ -16,7 +17,12 @@ function getAccountCreditCardTransactions(customerId, organizationId, creditCard
   return filteredTransactions;
 }
 
+function getCustomer(customerId) {
+  return customersMock.datas.find(c => c.customerId === customerId);
+}
+
 export default {
   getAccountTransactions,
   getAccountCreditCardTransactions,
+  getCustomer,
 }
