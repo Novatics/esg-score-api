@@ -1,11 +1,11 @@
-function scoreEvent(classifiedEvent) {
+import transportScorer from "./transport.scorer";
+
+function scoreClassifiedTransactions(classifiedTransactions) {
   return {
-    ...classifiedEvent,
-    score_tag: ['energy'],
-    score: 1
+    transport: transportScorer.score(classifiedTransactions),
   };
 }
 
 export default {
-  scoreEvent,
+  scoreClassifiedTransactions,
 }

@@ -1,7 +1,8 @@
 import coreService from "./core.service";
 
-function getUserScore(req, res) {
-  res.send(coreService.calculateCustomerScore());
+async function getUserScore(req, res) {
+  const score = await coreService.calculateCustomerScore();
+  res.send(score);
 }
 
 export default {

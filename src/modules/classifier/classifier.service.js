@@ -1,40 +1,17 @@
-/* classifyEvent JSON
-  {
-    event: accountTransaction | creditCardTransaction | .....
-    tags: []
-  }
+import transportClassifier from "./transport.classifier";
 
-*/
+const classifiers = [transportClassifier];
 
-const classifiers = [classifyEnergyEvent, classifyEnergyHealth];
-
-function classifyEvents(events) {
-  return events.map(event => classifyEvent(event));
+function classifyTransactions(transactions) {
+  return transactions
+    .map(transaction => classifyTransaction(transaction))
+    .filter(classifiedTransaction => classifiedTransaction.tags && classifiedTransaction.tags.length);
 }
 
-function classifyEvent(event) {
-  let classifiedEvent = { event, tags: [] };
-  classifiers.forEach(classifier => {
-    classifiedEvent = classifier(classifiedEvent);
-  })
-
-  return classifiedEvent;
-}
-
-function classifyEnergyEvent(classificationEvent) {
-  return {
-    ...classificationEvent,
-    tags: [...(new Set([...classificationEvent.tags, 'energy']))],
-  }
-}
-
-function classifyEnergyHealth(classificationEvent) {
-  return {
-    ...classificationEvent,
-    tags: [...(new Set([...classificationEvent.tags, 'health']))],
-  }
+function classifyTransaction(transaction) {
+  return classifiers.reduce((prev, curr) => curr.classify(prev), { transaction, tags: [] });
 }
 
 export default {
-  classifyEvents,
+  classifyTransactions,
 }
