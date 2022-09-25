@@ -1,6 +1,6 @@
 import express from 'express';
-import core from './src/modules/core';
-import serverConfig from './src/configs/server.config';
+import core from './modules/core';
+import serverConfig from './configs/server.config';
 
 const app = express();
 
