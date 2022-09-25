@@ -1,4 +1,5 @@
 import axios from "axios";
+import mocker from '../helpers/mocker';
 
 async function getTransactions(customerId, organizationId) {
   let transactions = [];
@@ -7,7 +8,11 @@ async function getTransactions(customerId, organizationId) {
   for (const account of accounts) {
     const { accountId } = account;
     const accountTransactions = await getAccountTransactions(customerId, organizationId, accountId);
-    transactions = [...transactions, ...accountTransactions];
+    
+    // Mock
+    const accountTransactionsMock = mocker.getAccountTransactions(customerId, organizationId, accountId);
+    
+    transactions = [...transactions, ...accountTransactions, ...accountTransactionsMock];
   }
 
   const creditCards = await getCreditCards(customerId, organizationId);
