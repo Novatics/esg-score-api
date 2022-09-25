@@ -12,17 +12,30 @@ async function getTransactions(customerId, organizationId) {
     // Mock
     const accountTransactionsMock = mocker.getAccountTransactions(customerId, organizationId, accountId);
     
-    transactions = [...transactions, ...accountTransactions, ...accountTransactionsMock];
+    transactions = [...transactions, ...accountTransactionsMock];
   }
 
-  const creditCards = await getCreditCards(customerId, organizationId);
-  for (const creditCard of creditCards) {
-    const { creditCardAccountId } = creditCard;
-    const creditCardTransactions = await getAccountCreditCardTransactions(customerId, organizationId, creditCardAccountId);
-    transactions = [...transactions, ...creditCardTransactions];
-  }
+  // const creditCards = await getCreditCards(customerId, organizationId);
+  // for (const creditCard of creditCards) {
+  //   const { creditCardAccountId } = creditCard;
+  //   const creditCardTransactions = await getAccountCreditCardTransactions(customerId, organizationId, creditCardAccountId);
+  //   transactions = [...transactions, ...creditCardTransactions];
+  // }
 
   return transactions;
+}
+
+async function getCustomer(customerId, organizationId) {
+  const { data: { data: [customer] } } = await axios({
+    method: "get",
+    url: 'https://challenge.hackathonbtg.com/customers/v1/personal/identifications',
+    headers: { 
+      organizationId,
+      customerId,
+    }
+  });
+
+  return customer;
 }
 
 async function getAccountTransactions(customerId, organizationId, accountId) {
@@ -79,4 +92,5 @@ async function getCreditCards(customerId, organizationId) {
 
 export default {
   getTransactions,
+  getCustomer,
 }

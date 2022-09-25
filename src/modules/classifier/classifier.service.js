@@ -1,6 +1,7 @@
 import transportClassifier from "./transport.classifier";
+import energyClassifier from "./energy.classifier";
 
-const classifiers = [transportClassifier];
+const classifiers = [transportClassifier, energyClassifier];
 
 function classifyTransactions(transactions) {
   return transactions
